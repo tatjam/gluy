@@ -26,6 +26,7 @@ namespace gluy
 			SET,		// (VARNAME) (VARNAME/NUMBER/STRING/ARG)
 
 			JMP,		// (LOC: NUMBER/VARNAME)
+			JMP_OFF,	// (OFF: NUMBER/VARNAME)
 
 			// For Numbers:
 			ADD,		// (VARNAME) (VARNAME/NUMBER/ARG)

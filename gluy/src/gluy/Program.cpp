@@ -96,5 +96,6 @@ namespace gluy
 	{
 		usr_handler = NULL;
 		err_handler = NULL;
+		data = gluy_struct();
 	}
 }

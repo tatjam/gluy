@@ -53,7 +53,7 @@ namespace gluy
 					}
 					else if (chunks[1].type == CodeChunk::ARG)
 					{
-						if (chunks[1].as_int >= args.size())
+						if (chunks[1].as_int >= (int)args.size())
 						{
 							return gluy_result(Data(), Error::ARG_OUT_OF_BOUNDS);
 						}
@@ -86,6 +86,52 @@ namespace gluy
 			{
 				return gluy_result(Data(), Error::INVALID_ARGUMENTS);
 			}
+		}
+		else if (code == CodeLine::OpCode::JMP)
+		{
+			int jmp = 0;
+			if (chunks[0].type == CodeChunk::VARNAME)
+			{
+				Data* d2 = resolve(chunks[0].data, super);
+				if (d2 != NULL && d2->type == Data::INT)
+				{
+					jmp = d2->as_int().value_or(0);
+				}
+				else
+				{
+					return gluy_result(Data(), Error::INVALID_VARIABLE);
+				}
+			}
+			else if (chunks[0].type == CodeChunk::INT)
+			{
+				jmp = chunks[0].as_int;
+			}
+
+			*pc = jmp;
+			*halt_pc = true;
+		}
+		else if (code == CodeLine::OpCode::JMP_OFF)
+		{
+			int jmp = 0;
+			if (chunks[0].type == CodeChunk::VARNAME)
+			{
+				Data* d2 = resolve(chunks[0].data, super);
+				if (d2 != NULL && d2->type == Data::INT)
+				{
+					jmp = d2->as_int().value_or(0);
+				}
+				else
+				{
+					return gluy_result(Data(), Error::INVALID_VARIABLE);
+				}
+			}
+			else if (chunks[0].type == CodeChunk::INT)
+			{
+				jmp = chunks[0].as_int;
+			}
+
+			*pc += jmp;
+			*halt_pc = true;
 		}
 
 		return nullopt;
@@ -135,15 +181,22 @@ namespace gluy
 		auto it = locals.find(name);
 		if (it == locals.end())
 		{
-			// Check this.[name]
-			auto it2 = super->data.find(name);
-			if (it2 == super->data.end())
+			if (!super->data.empty())
 			{
-				return NULL;
+				// Check this.[name]
+				auto it2 = super->data.find(name);
+				if (it2 == super->data.end())
+				{
+					return NULL;
+				}
+				else
+				{
+					return &it2->second;
+				}
 			}
 			else
 			{
-				return &it2->second;
+				return NULL;
 			}
 		}
 		else

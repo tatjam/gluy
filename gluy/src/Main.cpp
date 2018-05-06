@@ -45,12 +45,14 @@ int main(void)
 
 	line.code = gluy::CodeLine::SET;
 	chunk.type = gluy::CodeChunk::VARNAME;
-	chunk.data = "var1";
+	chunk.data = "var0";
 	line.chunks.push_back(chunk);
 	chunk.type = gluy::CodeChunk::INT;
 	chunk.as_int = 4;
 	line.chunks.push_back(chunk);
 	a.code.push_back(line);
+
+	line.chunks.clear();
 
 	proga.funcs.emplace("a", a);
 

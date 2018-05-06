@@ -20,45 +20,63 @@ namespace gluy
 		if (this != &b)
 		{
 			this->type = b.type;
-			this->reserve = b.reserve;
-			this->stData = b.stData;
+			if (this->type == INT)
+			{
+				this->reserve = b.reserve;
+			}
+			else if (this->type == FLOAT)
+			{
+				this->reservef = b.reservef;
+			}
+			else if (this->type == STRUCT)
+			{
+				this->stData = b.stData;
+			}
+			else if (this->type == VECTOR)
+			{
+				this->vcData = b.vcData;
+			}
+			else if (this->type == PROGRAM || this->type == FUNCTOR)
+			{
+				this->reserveptr = b.reserveptr;
+			}
 		}
 
 		return *this;
 	}
 
-	Data::Data(int data) : stData()
+	Data::Data(int data)
 	{
 		this->set(data);
 	}
 
-	Data::Data(float data) : stData()
+	Data::Data(float data)
 	{
 		this->set(data);
 	}
 
-	Data::Data(gluy_struct data) : stData()
+	Data::Data(gluy_struct data)
 	{
 		this->set(data);
 	}
 
-	Data::Data(gluy_vector data) : stData()
+	Data::Data(gluy_vector data)
 	{
 		this->set(data);
 	}
 
-	Data::Data(Function* data) : stData()
+	Data::Data(Function* data)
 	{
 		this->set(data);
 	}
 
 
-	Data::Data(Program* data) : stData()
+	Data::Data(Program* data)
 	{
 		this->set(data);
 	}
 
-	Data::Data(std::string str) : stData()
+	Data::Data(std::string str)
 	{
 		gluy_vector vec = gluy_vector();
 		for (size_t i = 0; i < str.size(); i++)
@@ -69,7 +87,7 @@ namespace gluy
 	}
 
 
-	Data::Data() : stData()
+	Data::Data()
 	{
 		this->set_void();
 	}
@@ -92,6 +110,10 @@ namespace gluy
 		else if (this->type == VECTOR)
 		{
 			this->vcData = b.vcData;
+		}
+		else if (this->type == PROGRAM || this->type == FUNCTOR)
+		{
+			this->reserveptr = b.reserveptr;
 		}
 	}
 
