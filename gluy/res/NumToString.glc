@@ -1,0 +1,58 @@
+is _;
+
+string use(int a)
+{
+	return "";
+}
+
+/*	
+	FIZZBUZZ IN HIGHLEVEL:
+		[char] fizzbuzz(int a)
+		{
+			[char] out;
+
+			if(a % 3 == 0)
+			{
+				out += "Fizz";
+			}
+
+			if(a % 5 == 0)
+			{
+				out += "Buzz";
+			}
+
+			if(out.empty())
+			{
+				out += cast(a, [char]);
+			}
+
+			return out;
+		}
+
+		
+	FIZZBUZZ IN LOWLEVEL:
+
+	Function fizzbuzz returns [CHAR] and takes INT "a"
+	{
+		[char] out				=>		MAKE "out" [char]
+		if(a % 3 == 0)			=>		MAKE "_tmp_000" INT		
+								=>		SET "_tmp_000" "a"
+								=>		MOD "_tmp_000" 3 "_tmp_000"
+								=>		CMP "_tmp_000" 0
+		out += "Fizz"			=>	T:	ARR_ADD "out" $"Fizz"	
+		if(a % 5 == 0)			=>		MAKE "_tmp_001" INT		
+								=>		SET "_tmp_001" "a"
+								=>		MOD "_tmp_001" 5 "_tmp_001"
+								=>		CMP "_tmp_001" 0
+		out += "Buzz";			=>	T:	ARR_ADD "out" $"Buzz"
+		if(out.empty())			=>		MAKE "_tmp_003" INT
+								=>		CALL "empty", "out", "_tmp_003"
+								=>		CMP "_tmp_003", 1
+		out += cast(a, [char])	=>	T:	MAKE "_tmp_004" [char]
+								=>	T:	CALL "cast", "a", T"[char]", "_tmp_004"
+								=>	T:	ARR_ADD "out" "_tmp_004"
+		return out				=>		RETURN "out"
+	}
+
+
+*/

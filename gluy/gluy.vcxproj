@@ -111,6 +111,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gluy\Data.cpp" />
+    <ClCompile Include="src\gluy\Function.cpp" />
+    <ClCompile Include="src\gluy\Program.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\gluy\Compiler.h" />
+    <ClInclude Include="src\gluy\Data.h" />
+    <ClInclude Include="src\gluy\Error.h" />
+    <ClInclude Include="src\gluy\Function.h" />
+    <ClInclude Include="src\gluy\optional.h" />
+    <ClInclude Include="src\gluy\Space.h" />
+    <ClInclude Include="src\gluy\Program.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\fizzbuzz.gls" />
+    <None Include="res\NumToString.glc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,6 @@
+is NumToString;
+
+string use(int a)
+{
+	return a.toString();
+}
