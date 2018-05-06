@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "optional.h"
+
 
 using nonstd::optional;
 using nonstd::nullopt;
@@ -13,8 +15,8 @@ namespace gluy
 	class Program;
 	class Function;
 
-	typedef std::vector<std::pair<std::string, Data>> gluy_struct;
-
+	typedef std::unordered_map<std::string, Data> gluy_struct;
+	typedef std::vector<Data> gluy_vector;
 
 	class Data
 	{
@@ -26,6 +28,7 @@ namespace gluy
 			uint64_t reserve;
 			float reservef;
 			gluy_struct stData;
+			gluy_vector vcData;
 			void* reserveptr;
 		};
 
@@ -36,6 +39,7 @@ namespace gluy
 			INT,
 			FLOAT,
 			STRUCT,
+			VECTOR,
 			PROGRAM,
 			FUNCTOR,
 			VOID
@@ -47,9 +51,11 @@ namespace gluy
 		Data(int data);
 		Data(float data);
 		Data(gluy_struct data);
+		Data(gluy_vector data);
 		Data(const Data& b);
 		Data(Function* data);
 		Data(Program* data);
+		Data(std::string str);
 
 		~Data();
 
@@ -65,7 +71,11 @@ namespace gluy
 		}
 		inline optional<gluy_struct> as_struct() const
 		{
-			return (this->type == DataType::INT) ? optional<gluy_struct>(this->stData) : nullopt;
+			return (this->type == DataType::STRUCT) ? optional<gluy_struct>(this->stData) : nullopt;
+		}
+		inline optional<gluy_vector> as_vector() const
+		{
+			return (this->type == DataType::VECTOR) ? optional<gluy_vector>(this->vcData) : nullopt;
 		}
 		inline optional<Program*> as_program() const
 		{
@@ -88,6 +98,10 @@ namespace gluy
 		{
 			this->type = STRUCT; this->stData = d;
 		}
+		inline void set(gluy_vector d)
+		{
+			this->type = VECTOR; this->vcData = d;
+		}
 		inline void set(Function* func)
 		{
 			this->type = FUNCTOR; this->reserveptr = (void*)func;
@@ -103,6 +117,9 @@ namespace gluy
 
 		operator std::string() const;
 		Data& operator=(const gluy::Data& b);
+
+		static Data from_typename(std::string tname);
+
 	};
 
 	typedef std::vector<std::pair<std::string, Data::DataType>> gluy_arglist;

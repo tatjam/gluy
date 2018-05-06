@@ -7,6 +7,7 @@
 
 namespace gluy
 {
+
 	// Callback typedefs
 	typedef void(*user_error_handler)(std::string& error);
 	typedef void(*error_handler)(Error::ErrorType error);

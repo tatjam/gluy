@@ -42,6 +42,11 @@ namespace gluy
 		this->set(data);
 	}
 
+	Data::Data(gluy_vector data) : stData()
+	{
+		this->set(data);
+	}
+
 	Data::Data(Function* data) : stData()
 	{
 		this->set(data);
@@ -51,6 +56,16 @@ namespace gluy
 	Data::Data(Program* data) : stData()
 	{
 		this->set(data);
+	}
+
+	Data::Data(std::string str) : stData()
+	{
+		gluy_vector vec = gluy_vector();
+		for (size_t i = 0; i < str.size(); i++)
+		{
+			vec.push_back(Data(str[i]));
+		}
+		this->set(vec);
 	}
 
 
@@ -74,14 +89,50 @@ namespace gluy
 		{
 			this->stData = b.stData;
 		}
+		else if (this->type == VECTOR)
+		{
+			this->vcData = b.vcData;
+		}
 	}
 
 
 	Data::~Data()
 	{
-		if (this->type == STRUCT)
+		/*if (this->type == STRUCT)
 		{
-			stData.~vector();
+			stData.~_Hash();
+		}*/
+	}
+
+	Data Data::from_typename(std::string tname)
+	{
+		if (tname == "int")
+		{
+			return Data(0);
+		}
+		else if (tname == "float")
+		{
+			return Data(0.0f);
+		}
+		else if (tname == "struct")
+		{
+			return Data(gluy_struct());
+		}
+		else if (tname == "vector")
+		{
+			return Data(gluy_vector());
+		}
+		else if (tname == "prog" || tname == "program")
+		{
+			return Data((Program*)NULL);
+		}
+		else if (tname == "func" || tname == "function")
+		{
+			return Data((Function*)NULL);
+		}
+		else
+		{
+			return Data();
 		}
 	}
 

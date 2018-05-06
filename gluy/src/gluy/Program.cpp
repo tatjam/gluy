@@ -62,6 +62,7 @@ namespace gluy
 			// Add the caller program
 			args.insert(args.begin(), Data(this));
 
+			f->locals.clear();
 			auto result = f->call(args, &error);
 			if (error != "")
 			{
